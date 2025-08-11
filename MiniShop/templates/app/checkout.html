@@ -1,0 +1,90 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Đặt hàng{% endblock title %}
+
+{% block checkout %}
+<div class="container">
+    {% if messages %}
+        {% for msg in messages %}
+            <div class="alert alert-danger" role="alert">{{msg}}</div>
+        {% endfor %}
+    {% endif %}
+    <div class="row mt-5">
+        <div class="col-sm-6">
+            <h4>Thông tin đơn hàng</h4>
+            <hr>
+            {% if buy_now %}
+                <div class="card mb-2">
+                    <div class="card-body">
+                        <h5>Sản phẩm: {{product.title}}</h5>
+                        <p>Số lượng: {{ quantity }}</p>
+                        <p class="fw-bold">Đơn giá: {{ product.discounted_price|floatformat:0 }} VNĐ</p>
+                    </div>
+                </div>
+                <small>Xin cam kết cung cấp sản phẩm và dịch vụ đúng như mô tả. Một số điều khoản áp dụng có thể 
+                thay đổi tùy từng thời điểm.Bạn cần kiểm tra kỹ thông tin trước khi đặt hàng. Mọi hành 
+                vi gian lận hoặc vi phạm đề sẽ cần được xử lý</small>
+            {% else %}
+                {% for item in cart_items %}
+                <div class="card mb-2">
+                    <div class="card-body">
+                        <h5>Sản phẩm: {{item.product.title}}</h5>
+                        <p>Số lượng: {{item.quantity}}</p>
+                        <p class="fw-bold">Đơn giá: {{item.product.discounted_price|floatformat:0}} VNĐ</p>
+                    </div>
+                </div>
+                {% endfor %}
+                <p class="fw-bold">Thành tiền = {{totalamount|floatformat:0}} VNĐ</p>
+                <small>Xin cam kết cung cấp sản phẩm và dịch vụ đúng như mô tả. Một số điều khoản áp dụng có thể 
+                thay đổi tùy từng thời điểm.Bạn cần kiểm tra kỹ thông tin trước khi đặt hàng. Mọi hành 
+                vi gian lận hoặc vi phạm đề sẽ cần được xử lý</small>
+            {% endif %}
+        </div>
+        <div class="col-sm-4 offset-sm-1">
+            <h4>Chọn địa chỉ giao hàng</h4>
+            <hr>
+            <form method="post" action="{% url 'paymentdone' %}" id="myform">
+                {% csrf_token %}
+                {% for ad in add %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5>{{ad.name}}</h5>
+                        <p>Số điện thoại: {{ad.mobile}}</p>
+                        <p>{{ad.locality}} {{ad.city}} {{ad.state}} - {{ad.zipcode}}</p>
+                    </div>
+                </div>
+                <div class="form-check mt-2 mb-5">
+                    <input class="form-check-input" type="radio" name="custid" id="custadd{{forloop.counter}}" value="{{ad.id}}">
+                    <label class="form-check-label fw-bold" for="custadd{{forloop.counter}}">Địa chỉ: {{forloop.counter}} </label>
+                </div>
+                {% endfor %}
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold mb-2">Chọn phương thức thanh toán:</label><br>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="method" id="cod" value="thanhToanSau" required>
+                        <label class="form-check-label" for="cod">Thanh toán khi nhận hàng</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="method" id="fake" value="thanhToan">
+                        <label class="form-check-label" for="fake">Thanh toán ngay</label>
+                    </div>
+                </div>
+
+                <div class="form-check mb-4">
+                    <label for="totamount" class="form-label">Số tiền phải trả:</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" name="totamount" value={{totalamount|floatformat:0}} readonly>
+                        <span class="input-group-text">VNĐ</span>
+                    </div>
+                </div>
+                <div class="text-end mt-4 mb-5">
+                    <button id="" type="submit" class="btn btn-warning mt-2 px-5 fw-bold">Xác nhận</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock checkout %}

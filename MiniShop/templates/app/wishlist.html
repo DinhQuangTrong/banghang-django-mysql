@@ -1,0 +1,32 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %} Danh sách yêu thích{% endblock title %}
+
+{% block main-content %}
+<div class="container my-5">
+    <h2>Sản phẩm yêu thích</h2>
+    <br>
+    <div class="row">
+        {% for prod in product %}
+            <div class="col-6 col-md-4 col-lg-3 mb-4">
+                <div class="goodnesssec bordercolor smbx text-center p-3 border rounded shadow-sm h-100">
+                    <a href="{% url 'product-detail' prod.product.id %}" class="btn">
+                    <div>
+                        <img src="{{prod.product.product_image.url}}" class="img-fluid d-block mx-auto" alt="{{ prod.product.title }}" style="height: 180px; object-fit: contain;"/>
+                        <br>
+                        <div class="mlkpro fw-bold mb-1">{{prod.product.title}}</div>
+                        <div class="fw-bold text-danger mb-2">
+                            {% if prod.product.selling_price > prod.product.discounted_price %}
+                                {{prod.product.discounted_price |floatformat:0}} VNĐ / <small class="fw-light text-decoration-line-through">{{prod.product.selling_price |floatformat:0}} VNĐ</small>
+                            {% else %}
+                                {{prod.product.selling_price |floatformat:0}} VNĐ
+                            {% endif %}
+                        </div>
+                    </div>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock main-content %}

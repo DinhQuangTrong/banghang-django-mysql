@@ -1,0 +1,74 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% block title %}Giới thiệu{% endblock title %}
+
+{% block banner-slider %}
+    <div id="carouselExampleIndicators" class="carousel slide carousel-fade">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{% static 'app/images/banner/banner4.jpg'%}" class="d-block w-100" alt="banner" height="400">
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'app/images/banner/banner6.jpg'%}" class="d-block w-100" alt="banner" height="400">
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'app/images/banner/banner7.jpg'%}" class="d-block w-100" alt="banner" height="400">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+{% endblock banner-slider %}
+
+{% block main-content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Cửa hàng Trực tuyến</h2>
+    <div class="row mb-5">
+        <p class="fs-5" style="text-align: justify;">
+            Mong muốn mang đến cho khách hàng những sản phẩm chất lượng với giá cả hợp lý. Tại đây, bạn có thể tìm thấy các mặt hàng như điện thoại, laptop, phụ kiện và nhiều sản phẩm khác phù hợp với nhu cầu hằng ngày của bạn.
+            Sự hài lòng của khách hàng là ưu tiên hàng đầu của chúng tôi. Cảm ơn bạn đã tin tưởng và ủng hộ!
+        </p>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-12">
+        <h4 class="text-primary">Tầm nhìn & Sứ mệnh</h4>
+        <p class="fs-5" style="text-align: justify;">
+            <strong>Tầm nhìn:</strong> Trở thành nền tảng mua sắm trực tuyến đáng tin cậy nhất tại Việt Nam, nơi khách hàng có thể tìm thấy mọi thứ họ cần một cách dễ dàng và nhanh chóng.
+            <br><br>
+            <strong>Sứ mệnh:</strong> Cung cấp các sản phẩm chất lượng cao với giá thành hợp lý, đồng thời tạo ra một trải nghiệm mua sắm thân thiện, minh bạch và hiệu quả cho mọi khách hàng.
+        </p>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-12">
+        <h4 class="text-primary">Giá trị cốt lõi</h4>
+        <ul class="fs-5" style="text-align: justify;">
+            <li><strong>Khách hàng là trung tâm:</strong> Luôn đặt nhu cầu và lợi ích của khách hàng lên hàng đầu.</li>
+            <li><strong>Chất lượng và uy tín:</strong> Cam kết cung cấp sản phẩm chính hãng, rõ nguồn gốc.</li>
+            <li><strong>Đổi mới sáng tạo:</strong> Luôn học hỏi và áp dụng công nghệ mới để nâng cao dịch vụ.</li>
+            <li><strong>Trách nhiệm xã hội:</strong> Kinh doanh bền vững và góp phần xây dựng cộng đồng tốt đẹp hơn.</li>
+        </ul>
+        </div>
+    </div>
+
+    <br/><br/>
+</div>
+{% endblock main-content %}

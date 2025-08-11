@@ -1,0 +1,44 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% block title %}Địa chỉ{% endblock title %}
+
+{% block profile %}
+    <div class="container my-5">
+        <div class="row">
+            <h3>Xin chào <span class="text-capitalize">{{request.user}}</span></h3>
+
+            <div class="col-sm-2 border-end">
+                <ul class="list-unstyled">
+                    <li class="d-grid"><a href="{% url 'profile' %}" class="btn ">Cập nhật thông tin</a></li>
+                    <li class="d-grid"><a href="{% url 'address' %}" class="btn btn-primary">Địa chỉ</a></li>
+                </ul>
+            </div>
+
+            <div class="col-sm-8 offset-sm-1">
+                <div class="row">
+                    {% for ad in add %}
+                    <div class="col-sm-6">
+                        <div class="card m-2">
+                            <div class="card-body">
+                                <h3>Địa chỉ {{forloop.counter}}</h3>
+                                <p>Họ va tên: {{ad.name}}</p>
+                                <p>Địa chỉ cụ thể: {{ad.locality}}</p>
+                                <p>Số điện thoại: {{ad.mobile}}</p>
+                                <p>Thành phố: {{ad.city}}</p>
+                                <p>Tỉnh: {{ad.state}}</p>
+                                <p>Mã: {{ad.zipcode}}</p>
+                                <p class="text-center"><a href="{% url 'updateAddress' pk=ad.id %}" type="button" class="btn btn-success">Cập nhật</a></p>
+                                {% comment %} <a href="{% url 'delete_address' pk=ad.id %}" 
+                                    class="btn btn-danger"
+                                    onclick="return confirm('Bạn có chắc muốn xoá địa chỉ này không?');">
+                                    Xoá
+                                </a> {% endcomment %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock profile %}

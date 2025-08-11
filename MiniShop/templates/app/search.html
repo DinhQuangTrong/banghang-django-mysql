@@ -1,0 +1,67 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %} Tìm kiếm{% endblock title %}
+
+{% block main-content %}
+<div class="container my-5">
+    {% if product %}
+        <div class="row">
+                {% for prod in product %}
+                    <div class="col-6 col-md-4 col-lg-3 mb-4">
+                        <div class="goodnesssec bordercolor smbx text-center p-3 border rounded shadow-sm h-100">
+                            <a href="{% url 'product-detail' prod.id %}" class="btn">
+                            <div>
+                                <img src="{{prod.product_image.url}}" class="img-fluid d-block mx-auto" alt="{{ product.title }}" style="height: 180px; object-fit: contain;"/>
+                                <br>
+                                <div class="mlkpro fw-bold mb-1">{{prod.title}}</div>
+                                <div class="fw-bold text-danger mb-2">
+                                    {% if prod.selling_price > prod.discounted_price %}
+                                        {{prod.discounted_price |floatformat:0}} VNĐ / <small class="fw-light text-decoration-line-through">{{prod.selling_price |floatformat:0}} VNĐ</small>
+                                    {% else %}
+                                        {{prod.selling_price |floatformat:0}} VNĐ
+                                    {% endif %}
+                                </div>
+                            </div>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-muted">Chưa có hàng phù hợp.</p>
+    {% endif %}
+
+
+    <h2 class="mt-4">Các sản phẩm khác</h2>
+        <br>
+        <div class="row">
+            {% for product in products %}
+            <div class="col-6 col-md-4 col-lg-2 mb-4">
+                <div class="goodnesssec bordercolor text-center p-3 border rounded shadow-sm h-100 d-flex flex-column">
+                    <a href="{% url 'product-detail' product.id %}" class="text-decoration-none text-dark">                      
+                        <img src="{{ product.product_image.url }}" class="img-fluid d-block mx-auto" alt="{{ product.title }}" style="height: 180px; object-fit: contain;">
+                        <br>
+                        <p class="mlkpro fw-bold mb-1">{{ product.title }}</p>                     
+                        <div class="fw-bold text-danger mb-2">
+                            {% if product.selling_price > product.discounted_price %}
+                                {{product.discounted_price |floatformat:0}} VNĐ / <small class="fw-light text-decoration-line-through">{{product.selling_price |floatformat:0}} VNĐ</small>
+                            {% else %}
+                                {{product.selling_price |floatformat:0}} VNĐ
+                            {% endif %}
+                        </div>
+                        <div class="mt-auto">
+                            <form action="/orders/add-to-cart" class="d-inline">
+                                {% csrf_token %}
+                                <input type="hidden" name="prod_id" value={{product.id}} />
+                                <button type="submit" class="btn btn-outline-secondary">Thêm vào giỏ hàng</button>
+                            </form>
+                            <a class="btn btn-outline-success mt-2" href="{% url 'product-detail' product.id %}">Xem</a> 
+                        </div>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    <br><br>
+</div>
+{% endblock main-content %}

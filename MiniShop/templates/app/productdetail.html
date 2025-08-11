@@ -1,0 +1,83 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% block title %}Chi tiết sản phẩm{% endblock title %}
+
+{% block main-content %}
+    <div class="container">
+        <br/>
+        <div class="row flex justify-content-between">
+            <div class="img2 col-lg-5 mt-5">
+                <img src="{{product.product_image.url}}" class="image col-xs-6 col-sm-12 col-lg-12 mt-3 text-sm-center w-100 h-75" alt="">
+            </div>
+            <div class="productdetail col-lg-5">
+                <h1 style="font-family: Roboto; font-size: 50px;">{{product.title}}</h1>
+                <div class="fw-bold text-danger mb-2">
+                    {% if product.selling_price > product.discounted_price %}
+                        <span class="fs-3">{{product.discounted_price |floatformat:0}} VNĐ / </span><small class="fw-light text-decoration-line-through">{{product.selling_price |floatformat:0}} VNĐ</small></>
+                    {% else %}
+                        <h3>{{product.selling_price |floatformat:0}} VNĐ </h3>
+                    {% endif %}
+                </div>
+                
+                <br><br><h4>Chi tiết sản phẩm: </h4>
+                <ul class="fs-5" style="font-family: Rajdhani;">
+                    <li>{{product.description}}</li>
+                </ul>
+                <div class="d-flex align-items-center flex-wrap gap-3 mt-3">
+                    <form action="/orders/add-to-cart" class="d-inline">
+                        <input type="hidden" name="prod_id" value={{product.id}} />
+                        <button type="submit" class="btn btn-primary shadow px-4 py-2">Thêm vào giỏ hàng</button>
+                    </form>
+                    <a href="{% url 'buy-now' product.id %}" class="btn btn-warning shadow px-4 py-2">Mua ngay</a>
+
+                    {% if request.user.is_authenticated %}
+                        {% if wishlist %}
+                            <a pid="{{ product.id }}" class="minus-wishlist btn btn-danger shadow px-4 py-2">
+                                <i class="fas fa-heart fa-lg"></i>
+                            </a>
+                        {% else %}
+                            <a pid="{{ product.id }}" class="plus-wishlist btn btn-success shadow px-4 py-2">
+                                <i class="fas fa-heart fa-lg"></i>
+                            </a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                <br/>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-10">
+                <h4 class="mt-4 mb-3">Mô tả</h4>
+                <br>               
+                <table class="table table-bordered table-striped">
+                    <tbody>
+                        <tr>
+                            <th scope="row" style="width: 30%;">Tên sản phẩm</th>
+                            <td>{{ product.title }}</td>
+                        </tr>
+                        <tr>
+                            <th>Giá</th>
+                            <td>
+                                {% if product.selling_price > product.discounted_price %}
+                                    <span class="fw-bold">{{ product.discounted_price|floatformat:0 }} VNĐ</span> /
+                                    <del class="text-muted ms-2">{{ product.selling_price|floatformat:0 }} VNĐ</del>
+                                {% else %}
+                                    <span class="fw-bold">{{ product.selling_price|floatformat:0 }} VNĐ</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Thành phần</th>
+                            <td>{{ product.composition }}</td>
+                        </tr>
+                        <tr>
+                            <th>Ứng dụng</th>
+                            <td>{{ product.prodapp }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock main-content %}
